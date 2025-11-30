@@ -358,9 +358,9 @@ return (
     onMouseDown={() => inputRef.current?.focus()}
     onClick={() => inputRef.current?.focus()}
   >
-    <div style={{ width: '90%', maxWidth: 720, borderRadius: 16, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.45)' }}>
+    <div style={{ width: '95%', maxWidth: 720, borderRadius: 16, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.45)' }}>
       <div style={{ background: '#0b1220', border: '1px solid #22314d' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderBottom: '1px solid #22314d', background: '#0f172a' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderBottom: '1px solid #22314d', background: '#0f172a', flexWrap: 'wrap' }}>
           <div style={{ width: 10, height: 10, borderRadius: 9999, background: '#ef4444' }} />
           <div style={{ width: 10, height: 10, borderRadius: 9999, background: '#f59e0b' }} />
           <div style={{ width: 10, height: 10, borderRadius: 9999, background: '#10b981' }} />
@@ -370,7 +370,8 @@ return (
         </div>
         <div
           ref={viewportRef}
-          style={{ maxHeight: 420, overflow: 'auto', padding: 16, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace', color: '#e6edf3' }}
+          className="terminal-viewport"
+          style={{ overflow: 'auto', padding: 16, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace', color: '#e6edf3' }}
           onMouseDown={() => inputRef.current?.focus()}
           onClick={() => inputRef.current?.focus()}
         >

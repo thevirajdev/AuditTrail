@@ -27,6 +27,7 @@ export default function EditorPage() {
   const [versions, setVersions] = useState<VersionEntry[]>([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [rows, setRows] = useState<number>(18);
 
   useEffect(() => {
     (async () => {
@@ -52,6 +53,21 @@ export default function EditorPage() {
 
   useEffect(() => {
     load();
+  }, []);
+
+  useEffect(() => {
+    const calcRows = () => {
+      const w = window.innerWidth;
+      if (w < 360) return 9;
+      if (w < 400) return 10;
+      if (w < 480) return 12;
+      if (w < 640) return 14;
+      return 18;
+    };
+    const apply = () => setRows(calcRows());
+    apply();
+    window.addEventListener('resize', apply);
+    return () => window.removeEventListener('resize', apply);
   }, []);
 
   const save = async () => {
@@ -94,26 +110,26 @@ export default function EditorPage() {
   return (
     <main>
 
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, padding: '10px 12px', border: '1px solid #22314d', borderRadius: 10, background: 'linear-gradient(180deg, rgba(31,41,55,0.5) 0%, rgba(15,23,42,0.5) 100%)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <header className="editor-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 16, padding: '10px 12px', border: '1px solid #22314d', borderRadius: 10, background: 'linear-gradient(180deg, rgba(31,41,55,0.5) 0%, rgba(15,23,42,0.5) 100%)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
           <div style={{ width: 10, height: 10, borderRadius: 9999, background: '#ef4444' }} />
           <div style={{ width: 10, height: 10, borderRadius: 9999, background: '#f59e0b' }} />
           <div style={{ width: 10, height: 10, borderRadius: 9999, background: '#22c55e' }} />
-          <h1 style={{ fontSize: 18, margin: 0, marginLeft: 8, color: '#e6edf3' }}>audit-trail — editor</h1>
+          <h1 className="editor-title" style={{ fontSize: 18, margin: 0, marginLeft: 8, color: '#e6edf3', whiteSpace: 'nowrap' }}>audit-trail — editor</h1>
         </div>
-        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-          {userEmail && <span style={{ color: '#9fb2c8', fontSize: 13, background: '#0f172a', padding: '6px 10px', borderRadius: 8, border: '1px solid #22314d' }}>{userEmail}</span>}
+        <div className="editor-header-actions" style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+          {userEmail && <span className="editor-email" style={{ maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#9fb2c8', fontSize: 13, background: '#0f172a', padding: '6px 10px', borderRadius: 8, border: '1px solid #22314d' }}>{userEmail}</span>}
           <button onClick={signOut} style={{ background: '#0f172a', color: '#e6edf3', padding: '8px 12px', borderRadius: 8, border: '1px solid #22314d', cursor: 'pointer' }}>Logout</button>
           <Link href="/" style={{ color: '#9fb2c8' }}>Home</Link>
         </div>
       </header>
 
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: 24 }}>
+      <div className="editor-grid" style={{ gap: 24 }}>
         <section>
           <h2 style={{ fontSize: 16, margin: '0 0 8px 0', color: '#9fb2c8' }}>Content Editor</h2>
           <div style={{ border: '1px solid #22314d', borderRadius: 10, overflow: 'hidden', background: '#0f172a' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '48px 1fr' }}>
+            <div className="code-grid">
               <div style={{ background: '#0b1220', borderRight: '1px solid #22314d', color: '#64748b', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace' }}>
                 <div style={{ padding: '8px 6px' }}>
                   {Array.from({ length: Math.max(16, content.split('\n').length) }).map((_, i) => (
@@ -130,18 +146,18 @@ export default function EditorPage() {
                 <textarea
                   value={content}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)}
-                  rows={18}
+                  rows={rows}
                   style={{ width: '100%', padding: '8px 12px', border: 'none', outline: 'none', background: 'transparent', color: '#e6edf3', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace', lineHeight: '1.6em', resize: 'vertical' }}
                   placeholder="Start typing..."
                 />
               </div>
             </div>
           </div>
-          <div style={{ marginTop: 12, display: 'flex', gap: 12 }}>
-            <button onClick={save} disabled={saving} style={{ background: '#2563eb', color: 'white', padding: '10px 14px', borderRadius: 8, border: 'none', cursor: 'pointer' }}>
+          <div className="actions-row" style={{ marginTop: 12, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <button className="btn-responsive" onClick={save} disabled={saving} style={{ background: '#2563eb', color: 'white', padding: '10px 14px', borderRadius: 8, border: 'none', cursor: 'pointer' }}>
               {saving ? 'Saving...' : 'Save Version'}
             </button>
-            <button onClick={load} style={{ background: '#0f172a', color: 'white', padding: '10px 14px', borderRadius: 8, border: '1px solid #22314d', cursor: 'pointer' }}>
+            <button className="btn-responsive" onClick={load} style={{ background: '#0f172a', color: 'white', padding: '10px 14px', borderRadius: 8, border: '1px solid #22314d', cursor: 'pointer' }}>
               Refresh
             </button>
             {error && <span style={{ color: '#fbbf24' }}>{error}</span>}

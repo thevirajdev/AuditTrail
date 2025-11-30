@@ -1,0 +1,59 @@
+/* Global styles and responsive helpers */
+
+html, body {
+  height: 100%;
+}
+
+.site-container {
+  padding: 16px;
+}
+
+@media (min-width: 640px) {
+  .site-container { padding: 20px; }
+}
+@media (min-width: 960px) {
+  .site-container { padding: 24px; }
+}
+
+/* Responsive editor grid: stacks on mobile */
+.editor-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 960px) {
+  .editor-grid { grid-template-columns: 1.6fr 1fr; }
+}
+
+/* Code-like grid gutter: smaller number gutter on mobile */
+.code-grid {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+}
+@media (min-width: 640px) {
+  .code-grid { grid-template-columns: 48px 1fr; }
+}
+
+/* Terminal viewport max height responsive */
+.terminal-viewport {
+  max-height: 60vh;
+}
+@media (min-width: 640px) {
+  .terminal-viewport { max-height: 70vh; }
+}
+
+/* Editor title size on small screens */
+.editor-title {
+  font-size: 16px !important;
+}
+@media (min-width: 480px) {
+  .editor-title { font-size: 18px !important; }
+}
+
+/* Buttons go full-width on very small screens */
+.btn-responsive {
+  width: 100%;
+}
+@media (min-width: 400px) {
+  .btn-responsive { width: auto; }
+}
