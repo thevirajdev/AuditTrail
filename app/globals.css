@@ -1,4 +1,6 @@
-/* Global styles and responsive helpers */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 html, body {
   height: 100%;
@@ -15,7 +17,6 @@ html, body {
   .site-container { padding: 24px; }
 }
 
-/* Responsive editor grid: stacks on mobile */
 .editor-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -25,7 +26,6 @@ html, body {
   .editor-grid { grid-template-columns: 1.6fr 1fr; }
 }
 
-/* Code-like grid gutter: smaller number gutter on mobile */
 .code-grid {
   display: grid;
   grid-template-columns: 36px 1fr;
@@ -34,7 +34,6 @@ html, body {
   .code-grid { grid-template-columns: 48px 1fr; }
 }
 
-/* Terminal viewport max height responsive */
 .terminal-viewport {
   max-height: 60vh;
 }
@@ -42,7 +41,6 @@ html, body {
   .terminal-viewport { max-height: 70vh; }
 }
 
-/* Editor title size on small screens */
 .editor-title {
   font-size: 16px !important;
 }
@@ -50,7 +48,6 @@ html, body {
   .editor-title { font-size: 18px !important; }
 }
 
-/* Buttons go full-width on very small screens */
 .btn-responsive {
   width: 100%;
 }
